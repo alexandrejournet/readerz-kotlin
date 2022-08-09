@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="explorer">Explorer</string>
+    <string name="parametres">Paramètres</string>
+    <string name="bibliotheque">Bibliothèque</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">search</string>
+    <string name="no_manga_biblio">Aucun manga dans votre bibliothèque</string>
+    <string name="title_activity_main2">MainActivity2</string>
+</resources>
