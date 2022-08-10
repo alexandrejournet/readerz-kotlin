@@ -17,7 +17,11 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jsoup:jsoup:1.15.2")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -53,4 +57,7 @@ android {
         minSdk = 21
         targetSdk = 32
     }
+}
+dependencies {
+    implementation("org.jsoup:jsoup:1.15.2")
 }
