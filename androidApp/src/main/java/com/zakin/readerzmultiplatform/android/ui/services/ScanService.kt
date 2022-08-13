@@ -8,7 +8,7 @@ import com.zakin.readerzmultiplatform.android.models.Site
 
 class ScanService: ViewModel() {
 
-    var site by mutableStateOf<Site?>(null)
+    var site by mutableStateOf(Site())
         private set
 
     fun addSite(selectedSite: Site) {

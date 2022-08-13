@@ -11,23 +11,29 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.zakin.readerzmultiplatform.android.models.data.MangaViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import com.zakin.readerzmultiplatform.ScrapService
 import com.zakin.readerzmultiplatform.android.routing.Router
-import com.zakin.readerzmultiplatform.android.ui.composable.items.BibliothequeListItem
+import com.zakin.readerzmultiplatform.android.ui.composable.items.SiteMangaListItem
 import com.zakin.readerzmultiplatform.android.ui.composable.toolbar.SiteToolbar
 import com.zakin.readerzmultiplatform.android.ui.services.ScanService
 import com.zakin.readerzmultiplatform.android.ui.theme.ReaderzMultiplatformTheme
+import com.zakin.readerzmultiplatform.models.MangaList
+import kotlinx.coroutines.*
+suspend fun getMangaList(url: String): MangaList {
+    return ScrapService().getMangaList(url)
+}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SiteView(router: Router, scanService: ScanService) {
-    // ArrayList of class ItemsViewModel
-    val data = ArrayList<MangaViewModel>()
+    var mangaList: LiveData<MangaList> = MutableLiveData()
 
-    // This loop will create 20 Views containing
-    // the image with the count of view
-    for (i in 1..3) {
-        data.add(MangaViewModel("Item $i", i))
+    mangaList = liveData {
+        val data = getMangaList(scanService.site.url)
+        emit(data)
     }
 
     ReaderzMultiplatformTheme {
@@ -37,12 +43,10 @@ fun SiteView(router: Router, scanService: ScanService) {
         ) {
             Scaffold(
                 topBar = {
-                    scanService.site?.let {
-                        SiteToolbar(
-                            siteName = it.name,
-                            onClickBack = { router.goBack() }
-                        )
-                    }
+                    SiteToolbar(
+                        siteName = scanService.site.name,
+                        onClickBack = { router.goBack() }
+                    )
                 }
             ) {
                 LazyColumn(
@@ -50,11 +54,12 @@ fun SiteView(router: Router, scanService: ScanService) {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(
-                        items = data,
+                        items = mangaList.mangas,
                         itemContent = {
-                            BibliothequeListItem(manga = it)
+                            SiteMangaListItem(manga = it)
                         })
                 }
+
             }
         }
     }
