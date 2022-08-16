@@ -2,6 +2,7 @@ package com.zakin.readerzmultiplatform.android.presentation.ui.composable.items
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,7 +15,7 @@ import com.zakin.readerzmultiplatform.models.Manga
 
 @Composable
 fun SiteMangaListItem(manga: Manga, router: Router) {
-    Row(Modifier.padding(20.dp, 15.dp).clickable { router.openMangaView(manga) }) {
+    Row(Modifier.padding(15.dp).fillMaxWidth().clickable { router.openMangaView(manga) }) {
         Text(text = manga.name, fontSize = 14.sp, color = MaterialTheme.colors.secondary)
     }
 }

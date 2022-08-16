@@ -10,6 +10,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 
 
@@ -124,7 +125,8 @@ actual class ScrapService actual constructor() {
 
                 if(dateElement.isNotEmpty()) {
                     val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy", Locale.ENGLISH)
-                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter).toString()
+                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter).format(DateTimeFormatter
+                        .ofLocalizedDate(FormatStyle.MEDIUM))
                 }
 
                 manga.chapters.add(chapter);

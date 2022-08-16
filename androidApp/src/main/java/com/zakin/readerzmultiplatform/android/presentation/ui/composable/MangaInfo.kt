@@ -27,11 +27,12 @@ fun MangaInfo(manga: Manga) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Surface(modifier= Modifier
                         .width(150.dp)
-                        .padding(10.dp)
+                        .padding(15.dp)
                     ) {
                         Box(modifier= Modifier
                             .border(BorderStroke(1.dp, Color.Black), shape = RoundedCornerShape(5.dp))
                             .aspectRatio(5f / 7f)
+                            .align(Alignment.CenterVertically)
                         ) {
                             Text(text="Image container", color = MaterialTheme.colors.secondary)
                         }
@@ -44,7 +45,7 @@ fun MangaInfo(manga: Manga) {
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().padding(30.dp, 10.dp)) {
+                    modifier = Modifier.fillMaxWidth().padding(15.dp, 10.dp)) {
                     // TODO: Bloquer la hauteur avec un bouton
                     Text(text = "Résumé", fontSize = 14.sp, color = MaterialTheme.colors.secondary)
                 }

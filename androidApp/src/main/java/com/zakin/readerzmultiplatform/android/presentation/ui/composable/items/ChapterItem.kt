@@ -23,15 +23,14 @@ fun ChapterItem(chapter: Chapter, router: Router) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp, 0.dp)
                 .clickable { // Todo: ouvrir le reader
                 },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                Text(text = chapter.name, fontSize = 15.sp, color = MaterialTheme.colors.secondary)
-                Text(text = chapter.addedDate, fontSize = 10.sp, color = MaterialTheme.colors.secondary)
+                Text(text = chapter.name, fontSize = 14.sp, color = MaterialTheme.colors.secondary)
+                Text(text = chapter.addedDate, fontSize = 11.sp, color = MaterialTheme.colors.secondary)
             }
             IconButton(onClick = {  }) {
                 Icon(
