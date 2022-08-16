@@ -8,4 +8,5 @@
     <string name="search">search</string>
     <string name="no_manga_biblio">Aucun manga dans votre bibliothèque</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="app_name">Readerz</string>
 </resources>

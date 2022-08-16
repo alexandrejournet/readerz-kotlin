@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.HashMap
 
 
 actual class ScrapService actual constructor() {
@@ -23,7 +22,12 @@ actual class ScrapService actual constructor() {
         {
             val listMangaUrl = "$url/changeMangaList?type=text"
 
-            val doc = Jsoup.connect(listMangaUrl).get()
+            val connect = Jsoup.connect(listMangaUrl)
+                .ignoreHttpErrors(true)
+                .timeout(0)
+
+            val doc = connect.get()
+
             val elems = doc.select("li > a")
 
             for (elem in elems) {
@@ -32,7 +36,7 @@ actual class ScrapService actual constructor() {
 
                 val manga = Manga(name = name, link = link)
 
-                mangaList.mangas?.add(manga)
+                mangaList.mangas.add(manga)
             }
 
             mangaList.count = elems.size
@@ -120,10 +124,10 @@ actual class ScrapService actual constructor() {
 
                 if(dateElement.isNotEmpty()) {
                     val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy", Locale.ENGLISH)
-                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter)
+                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter).toString()
                 }
 
-                manga.chapters?.add(chapter);
+                manga.chapters.add(chapter);
             }
         }
 
