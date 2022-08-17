@@ -9,5 +9,5 @@ expect class ScrapService() {
     fun getMangaList(url: String): MangaList
     fun getManga(url: String): Manga
     fun getChapter(url: String): Chapter
-    fun getPage(baseUrl: String, url: String): Page
+    fun getPage(url: String): ByteArray
 }
