@@ -53,7 +53,9 @@ actual class ScrapService actual constructor() {
 
         if (url.isNotEmpty() && url != "undefined")
         {
-            val doc = Jsoup.connect(url).get()
+            val doc = Jsoup.connect(url)
+                .ignoreHttpErrors(true)
+                .timeout(0).get()
 
             val listItemsName = doc.select("dt")
             val listItems = doc.select("dd")
@@ -127,8 +129,7 @@ actual class ScrapService actual constructor() {
 
                 if(dateElement.isNotEmpty()) {
                     val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy", Locale.ENGLISH)
-                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter).format(DateTimeFormatter
-                        .ofLocalizedDate(FormatStyle.MEDIUM))
+                    chapter.addedDate = LocalDate.parse(dateElement.text(), formatter).format(DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.FRENCH))
                 }
 
                 manga.chapters.add(chapter);
@@ -143,7 +144,9 @@ actual class ScrapService actual constructor() {
 
         if (url.isNotEmpty() && url != "undefined")
         {
-            val doc = Jsoup.connect(url).get()
+            val doc = Jsoup.connect(url)
+                .ignoreHttpErrors(true)
+                .timeout(0).get()
 
             val pages = doc.select("div#all > img")
 
@@ -156,7 +159,7 @@ actual class ScrapService actual constructor() {
 
                 val name = page.attr("alt")
 
-                chapter.pages?.add(Page(index + 1, name, src))
+                chapter.pages.add(Page(index + 1, name, src))
             }
         }
 
@@ -173,7 +176,7 @@ actual class ScrapService actual constructor() {
 
             val list = listOf(XSRFTOKEN, LARAVEL, CFBM)
 
-            val itemLink = (if (url.contains("http")) url else url.replace("//", "https://www.")).trim();
+            val itemLink = (if (url.contains("http")) url else url.replace("//", "https://")).trim();
             val imgConnection = URL(itemLink).openConnection() as HttpURLConnection
             imgConnection.setRequestProperty("COOKIES", list.joinToString(";"))
             imgConnection.connect()
@@ -189,10 +192,10 @@ actual class ScrapService actual constructor() {
     }
 
     fun getHtmlLink(link: String): String {
-        val rx = Regex("<a href=\\\"([^\\\"]*)\\\"")
+        val rx = Regex("<a href=\\\"(.*)\\\"")
         val match = rx.find(link)
 
-        return match?.value ?: ""
+        return match?.groups?.get(1)?.value ?: ""
     }
 
 }

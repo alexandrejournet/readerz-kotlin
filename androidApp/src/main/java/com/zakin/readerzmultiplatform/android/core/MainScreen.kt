@@ -50,5 +50,9 @@ fun MainScreen(navController: NavHostController) {
         composable(NavRoutes.Manga.route) {
             MangaScreen(router, scanService)
         }
+
+        composable(NavRoutes.Reader.route) {
+            ReaderScreen(router, scanService)
+        }
     }
 }

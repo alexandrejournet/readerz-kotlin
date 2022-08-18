@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import com.zakin.readerzmultiplatform.android.core.NavRoutes
 import com.zakin.readerzmultiplatform.android.data.ScanService
 import com.zakin.readerzmultiplatform.android.domain.models.Site
+import com.zakin.readerzmultiplatform.models.Chapter
 import com.zakin.readerzmultiplatform.models.Manga
 
 class RouterImpl(
@@ -71,8 +72,9 @@ class RouterImpl(
         navHostController.navigate(NavRoutes.Manga.route)
     }
 
-    override fun openReader() {
-        TODO("Not yet implemented")
+    override fun openReader(chapter: Chapter) {
+        setChapter(chapter)
+        navHostController.navigate(NavRoutes.Reader.route)
     }
 
     override fun <T: Any> putArgs(key: String, value: T) {
@@ -88,5 +90,9 @@ class RouterImpl(
 
     private fun setManga(manga: Manga) {
         scanService.addManga(manga)
+    }
+
+    private fun setChapter(chapter: Chapter) {
+        scanService.addChapter(chapter)
     }
 }

@@ -9,4 +9,5 @@
     <string name="no_manga_biblio">Aucun manga dans votre bibliothèque</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="app_name">Readerz</string>
+    <string name="rechercher">Rechercher</string>
 </resources>

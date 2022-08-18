@@ -5,5 +5,6 @@ sealed class NavRoutes(val route: String, val tag: String? = null) {
     object Site: NavRoutes("site")
     object Manga: NavRoutes("manga")
     object Splash: NavRoutes("splash")
+    object Reader: NavRoutes("reader")
 
 }

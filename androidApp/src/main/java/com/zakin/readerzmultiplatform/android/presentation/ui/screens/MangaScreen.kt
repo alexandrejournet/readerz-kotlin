@@ -22,6 +22,7 @@ import com.zakin.readerzmultiplatform.android.presentation.ui.composable.MangaIn
 import com.zakin.readerzmultiplatform.android.presentation.ui.composable.toolbar.SiteToolbar
 import com.zakin.readerzmultiplatform.android.presentation.ui.theme.ReaderzMultiplatformTheme
 import com.zakin.readerzmultiplatform.models.Manga
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.Executors
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -45,7 +46,7 @@ fun MangaScreen(router: Router, scanService: ScanService) {
                 topBar = {
                     SiteToolbar(
                         siteName = "",
-                        onClickBack = { router.goBack() }
+                        onClickBack = { router.goBack() },
                     )
                 }
             ) {

@@ -30,7 +30,7 @@ fun SplashScreen(goBack: () -> Unit) {
     // AnimationEffect
     LaunchedEffect(key1 = true) {
         scale.animateTo(
-            targetValue = 0.7f,
+            targetValue = 3f,
             animationSpec = tween(
                 durationMillis = 800,
                 easing = {
@@ -49,6 +49,5 @@ fun SplashScreen(goBack: () -> Unit) {
         Image(image,
             contentDescription = "Logo",
             modifier = Modifier.scale(scale.value))
-        Text(text= "Readerz", color= textColorDark)
     }
 }

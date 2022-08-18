@@ -27,7 +27,7 @@ fun MangaChapters(manga: Manga, router: Router) {
             color = MaterialTheme.colors.background
         ) {
             Column {
-                Text(text = "${manga.chapters.size} chapitres", fontSize = 14.sp, fontWeight = FontWeight.Bold , color = MaterialTheme.colors.secondary, modifier=Modifier.padding(15.dp, 10.dp))
+                Text(text = "${manga.chapters.size} chapitres", fontSize = 16.sp, fontWeight = FontWeight.Bold , color = MaterialTheme.colors.secondary, modifier=Modifier.padding(15.dp, 10.dp))
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 15.dp, vertical = 5.dp),
                     modifier = Modifier.fillMaxSize()

@@ -12,7 +12,8 @@ import com.zakin.readerzmultiplatform.android.presentation.ui.theme.textColorLig
 
 @Composable
 fun GenericToolbar(
-    title: String) {
+    title: String,
+    navigationIcon: @Composable() (() -> Unit)? = null) {
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primaryVariant) {
         Row(Modifier.padding(15.dp)) {
