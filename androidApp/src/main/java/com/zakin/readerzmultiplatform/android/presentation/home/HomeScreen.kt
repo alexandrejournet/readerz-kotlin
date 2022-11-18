@@ -22,8 +22,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.zakin.readerzmultiplatform.android.core.routing.Router
 import com.zakin.readerzmultiplatform.android.presentation.ui.theme.ReaderzMultiplatformTheme
+import com.zakin.readerzmultiplatform.android.presentation.ui.theme.tabHighlight
 import com.zakin.readerzmultiplatform.android.ui.composable.BibliothequeScreen
-import com.zakin.readerzmultiplatform.android.ui.composable.ExplorerScreen
+import com.zakin.readerzmultiplatform.android.ui.composable.SitesScreen
 import com.zakin.readerzmultiplatform.android.ui.composable.ParametreScreen
 import kotlinx.coroutines.launch
 
@@ -65,7 +66,7 @@ fun TabWithPager(router: Router) {
                             Icon(
                                 imageVector = if (tabIndex == index) icon else iconNotSelected[index],
                                 contentDescription = null,
-                                tint = MaterialTheme.colors.primaryVariant,
+                                tint = if (tabIndex == index) tabHighlight else MaterialTheme.colors.primaryVariant,
                             )
                         })
                     }
@@ -83,7 +84,7 @@ fun TabWithPager(router: Router) {
                 ) {
                     when (index) {
                         0 -> BibliothequeScreen(router)
-                        1 -> ExplorerScreen(router)
+                        1 -> SitesScreen(router)
                         2 -> ParametreScreen(router)
                     }
                 }

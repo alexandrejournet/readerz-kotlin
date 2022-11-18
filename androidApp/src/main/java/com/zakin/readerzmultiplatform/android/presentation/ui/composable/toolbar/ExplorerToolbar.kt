@@ -10,10 +10,10 @@ import androidx.compose.ui.unit.dp
 
 @Preview
 @Composable
-fun ExplorerToolbar() {
+fun SitesToolbar() {
     TopAppBar() {
         Row(Modifier.padding(15.dp)) {
-            Text(text = "Explorer", style = MaterialTheme.typography.h6, color = MaterialTheme.colors.secondary)
+            Text(text = "Sites", style = MaterialTheme.typography.h6, color = MaterialTheme.colors.secondary)
         }
     }
 }

@@ -12,12 +12,12 @@ import androidx.compose.ui.unit.dp
 import com.zakin.readerzmultiplatform.android.core.routing.Router
 import com.zakin.readerzmultiplatform.android.domain.models.Site
 import com.zakin.readerzmultiplatform.android.domain.enums.Sites
-import com.zakin.readerzmultiplatform.android.presentation.ui.composable.items.ExplorerListItem
+import com.zakin.readerzmultiplatform.android.presentation.ui.composable.items.SitesListItem
 import com.zakin.readerzmultiplatform.android.presentation.ui.composable.toolbar.GenericToolbar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ExplorerScreen(router: Router) {
+fun SitesScreen(router: Router) {
     // ArrayList of class ItemsViewModel
     val data = ArrayList<Site>()
 
@@ -31,7 +31,7 @@ fun ExplorerScreen(router: Router) {
 
     Scaffold(
         topBar = {
-            GenericToolbar("Explorer")
+            GenericToolbar("Sites")
         }
     ) {
         LazyColumn(
@@ -41,7 +41,7 @@ fun ExplorerScreen(router: Router) {
             items(
                 items = data,
                 itemContent = {
-                    ExplorerListItem(site = it, router)
+                    SitesListItem(site = it, router)
                 })
         }
     }

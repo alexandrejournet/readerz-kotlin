@@ -15,7 +15,7 @@ import com.zakin.readerzmultiplatform.android.core.routing.Router
 import com.zakin.readerzmultiplatform.android.domain.models.Site
 
 @Composable
-fun ExplorerListItem(site: Site, router: Router) {
+fun SitesListItem(site: Site, router: Router) {
     Row(
         modifier = Modifier.padding(15.dp).fillMaxWidth().clickable {router.openSiteView(site) }
     ) {

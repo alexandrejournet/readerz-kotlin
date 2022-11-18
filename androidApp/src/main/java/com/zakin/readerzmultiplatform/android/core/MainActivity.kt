@@ -21,7 +21,7 @@ fun greet(): String {
 
 val tabsArray = arrayOf(
     "Bibliothèque",
-    "Explorer",
+    "Sites",
     "Paramètres"
 )
 

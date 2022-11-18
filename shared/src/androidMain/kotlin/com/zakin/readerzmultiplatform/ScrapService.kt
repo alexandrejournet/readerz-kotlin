@@ -6,6 +6,7 @@ import com.zakin.readerzmultiplatform.models.MangaList
 import com.zakin.readerzmultiplatform.models.Page
 import com.zakin.readerzmultiplatform.models.enums.Badges
 import com.zakin.readerzmultiplatform.models.enums.Tags
+import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.HttpURLConnection
@@ -47,7 +48,6 @@ actual class ScrapService actual constructor() {
 
         return mangaList
     }
-
     actual fun getManga(url: String): Manga {
         val manga = Manga()
 
@@ -138,7 +138,6 @@ actual class ScrapService actual constructor() {
 
         return manga
     }
-
     actual fun getChapter(url: String): Chapter {
         val chapter = Chapter()
 
@@ -165,24 +164,35 @@ actual class ScrapService actual constructor() {
 
         return chapter
     }
-
     actual fun getPage(url: String): ByteArray {
 
         if (url.isNotEmpty() && url != "undefined")
         {
-            val XSRFTOKEN = "XSRF-TOKEN=eyJpdiI6IjZGcGhoeHRZQUNNVzZDUDVcL2owb3BRPT0iLCJ2YWx1ZSI6IllpeDB6SnBEQ2k0MThlc0VMajJyY2NNT0hsdEt0YjAwUjdhRXNYTXVQa3dVNTdibnpPMzV4dmlPNFZ2bENXN3ZMWXY0N0JHTUxjYzhlRHBKSCtkZVZ3PT0iLCJtYWMiOiI3OTk4YWNiZjI2M2M0ZWUwNmQxNTdhNTZiZjY1ZDc3ZDNmZWFkODE3OGQzZTMzZjcwNjAxMGViNTk1ZWYwYTIxIn0%3D"
-            val LARAVEL = "laravel_session=eyJpdiI6Im9SRndOcSt6NUdrK2YzMCttMm0zcFE9PSIsInZhbHVlIjoidmFcL1JKQmp3NGlETzlLSGtXXC9FZWNpVEt5dmJ4YUlqXC9sTEdtQ0FvUmNIalllamJEb1FpYnVISkNJZXowQ0VhUm5xMjRHNDFKUFlPTGljb1pUYlhKamc9PSIsIm1hYyI6IjRkOTU0OThhMmNmNDk3NTEwMzYxNjAwYWM4NTc4ZmJlYjc0YjA2MzNkM2ExOGZkYTExODI2NzM2MzMzYzIwYWQifQ%3D%3D"
-            val CFBM = "__cf_bm=TC7Lge.9K40AnA3Dvyw4s0y9bjMqOxmo9wV55zomu6Y-1660770640-0-AcDolHCMAp4oUhn3t/J1E1zKHa5eUIFfuLvXWoS1jeEkFCUB1wNJRN4par5tj7xbMCjnC/H1WPP57wq7JVHvk7dBmh4UALXkfUA/EcZ62Y0YseQ5trhjRMW44HhMMTAiDg=="
-
-            val list = listOf(XSRFTOKEN, LARAVEL, CFBM)
-
             val itemLink = (if (url.contains("http")) url else url.replace("//", "https://")).trim();
-            val imgConnection = URL(itemLink).openConnection() as HttpURLConnection
-            imgConnection.setRequestProperty("COOKIES", list.joinToString(";"))
-            imgConnection.connect()
-            val responseCode = imgConnection.responseCode
-            return if (responseCode == HttpURLConnection.HTTP_OK) {
-                imgConnection.inputStream.use { it.readBytes() }
+
+            val baseUrl = getBaseUrl(itemLink)
+
+            val cookies = mutableMapOf<String, String>()
+
+            val initialResponse = Jsoup.connect(baseUrl)
+                .method(Connection.Method.GET)
+                .cookies(cookies)
+                .execute()
+            cookies.putAll(initialResponse.cookies())
+
+            cookies["Keep-Alive"] = "true"
+
+            val secondResponse = Jsoup.connect(itemLink)
+                .method(Connection.Method.GET)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36")
+                .referrer(itemLink)
+                .cookies(cookies)
+                .maxBodySize(0)
+                .ignoreContentType(true)
+                .execute()
+
+            return if(secondResponse.statusCode() == HttpURLConnection.HTTP_OK) {
+                secondResponse.bodyAsBytes()
             } else {
                 ByteArray(0)
             }
@@ -195,6 +205,12 @@ actual class ScrapService actual constructor() {
         val rx = Regex("<a href=\\\"(.*)\\\"")
         val match = rx.find(link)
 
+        return match?.groups?.get(1)?.value ?: ""
+    }
+
+    fun getBaseUrl(link: String): String {
+        val rx = Regex("(.*(\\/\\/)[^\\/]*)")
+        val match = rx.find(link)
         return match?.groups?.get(1)?.value ?: ""
     }
 

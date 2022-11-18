@@ -1,8 +1,11 @@
 package com.zakin.readerzmultiplatform.android.presentation.ui.composable
 
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -12,21 +15,41 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BrokenImage
 import androidx.compose.material.icons.rounded.DownloadForOffline
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.createBitmap
+import com.zakin.readerzmultiplatform.ScrapService
 import com.zakin.readerzmultiplatform.android.presentation.ui.theme.ReaderzMultiplatformTheme
 import com.zakin.readerzmultiplatform.android.presentation.ui.theme.placeholderImg
 import com.zakin.readerzmultiplatform.android.presentation.ui.theme.placeholderImgIcon
 import com.zakin.readerzmultiplatform.models.Manga
+import java.util.concurrent.Executors
 
 @Composable
 fun MangaInfo(manga: Manga) {
+
+    var image by remember { mutableStateOf(createBitmap(1000, 1000).asImageBitmap()) }
+
+    var loading by remember {mutableStateOf(true) }
+
+    val executor = Executors.newSingleThreadExecutor()
+    executor.execute {
+        val bytes = ScrapService().getPage(manga.coverLink)
+        if (bytes.isNotEmpty()) {
+            image = BitmapFactory.decodeByteArray(bytes, 0, bytes.size).asImageBitmap()
+        }
+        loading = false
+    }
+
     ReaderzMultiplatformTheme {
         Surface(
             color = MaterialTheme.colors.background
@@ -45,11 +68,21 @@ fun MangaInfo(manga: Manga) {
                             contentAlignment = Alignment.Center,
 
                         ) {
-                            Icon(
-                                imageVector = Icons.Rounded.BrokenImage,
-                                contentDescription = null,
-                                tint = placeholderImgIcon,
-                            )
+                            if(loading) {
+                                Icon(
+                                    imageVector = Icons.Rounded.BrokenImage,
+                                    contentDescription = null,
+                                    tint = placeholderImgIcon,
+                                )
+                            } else {
+                                image.let {
+                                    Image(
+                                        bitmap = it,
+                                        contentDescription = null,
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                }
+                            }
                         }
                     }
                     Column {

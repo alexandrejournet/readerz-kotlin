@@ -3,9 +3,11 @@ package com.zakin.readerzmultiplatform.android.presentation.ui.screens
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +45,7 @@ fun SplashScreen(goBack: () -> Unit) {
 
     // Image
     Column(modifier = Modifier
-        .fillMaxSize(),
+        .fillMaxSize().background(MaterialTheme.colors.primaryVariant),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally) {
         Image(image,

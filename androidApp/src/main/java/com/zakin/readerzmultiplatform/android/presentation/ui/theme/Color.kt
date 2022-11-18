@@ -15,3 +15,5 @@ val textColorDark = Color(0xFF000000)
 
 val placeholderImg = Color(0xFFD0D0D0)
 val placeholderImgIcon = Color(0xFFC0C0C0)
+
+val tabHighlight = Color(0xFFFF5900)

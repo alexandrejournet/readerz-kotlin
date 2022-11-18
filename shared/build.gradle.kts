@@ -57,4 +57,5 @@ android {
         minSdk = 26
         targetSdk = 32
     }
+    buildToolsVersion = "32.0.0"
 }

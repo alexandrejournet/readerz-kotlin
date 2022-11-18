@@ -39,7 +39,8 @@ fun SiteToolbar(
     placeholderText: String? = "",
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
-    color: Color = MaterialTheme.colors.primaryVariant
+    color: Color = MaterialTheme.colors.primaryVariant,
+    iconColor: Color = textColorToolbar,
 ) {
 
     ReaderzMultiplatformTheme {
@@ -59,7 +60,7 @@ fun SiteToolbar(
                     Text(
                         text = siteName,
                         style = MaterialTheme.typography.h6,
-                        color = textColorToolbar
+                        color = iconColor
                     )
                 },
                 navigationIcon = {
@@ -67,7 +68,7 @@ fun SiteToolbar(
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = null,
-                            tint = textColorToolbar,
+                            tint = iconColor,
                         )
                     }
                 }

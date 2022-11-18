@@ -1,5 +1,5 @@
 buildscript {
-    val compose_version by extra("1.1.0-beta01")
+    val compose_version by extra("1.3.0-beta01")
     repositories {
         gradlePluginPortal()
         google()
